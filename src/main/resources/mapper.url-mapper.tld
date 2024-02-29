@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.shortlink.dao.UrlMapper">
+
+    <sql id="selectFields">
+        id,short_url, long_url,expire_time,create_time,update_time
+    </sql>
+    <sql id="insertFields">
+        short_url, long_url,expire_time,create_time,update_time
+    </sql>
+    <select id="selectLongUrlByShortUrl" resultType="Url">
+        select <include refid="selectFields"></include>
+        from url
+        where short_url = #{shortUrl}
+    </select>
+
+    <insert id="insertUrl" parameterType="Url">
+        insert into url(<include refid="insertFields"></include>)
+        values (#{shortUrl},#{longUrl},#{expireTime},#{createTime},#{updateTime})
+    </insert>
+    <update id="updateIP">
+        update url set ip=#{ip} where short_url=#{shortUrl}
+    </update>
+
+</mapper>
